@@ -16,16 +16,15 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logo from "../assets/batman-tdk-1.svg";
 
 export const Navbar = ({ history }) => {
-  const dispatch = useDispatch();
   const islogged = useSelector((state) => state.logged.islogged);
   const [logged, setLogged] = useState(islogged);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
       setLogged(true);
       dispatch(isLogged(logged));
     } else setLogged(false);
-  }, [logged]);
+  }, [logged, dispatch]);
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState("none");

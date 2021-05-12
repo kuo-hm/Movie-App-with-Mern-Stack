@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   useColorMode,
   Switch,
@@ -9,10 +9,23 @@ import {
   Image,
   Spacer,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import logo from "../media/batman-tdk-1.svg";
+import { isLogged } from "../features/logged/loggedSlice";
 
-export const Navbar = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import logo from "../assets/batman-tdk-1.svg";
+
+export const Navbar = ({ history }) => {
+  const dispatch = useDispatch();
+  const islogged = useSelector((state) => state.logged.islogged);
+  const [logged, setLogged] = useState(islogged);
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      setLogged(true);
+      dispatch(isLogged(logged));
+    } else setLogged(false);
+  }, [logged]);
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState("none");
@@ -26,12 +39,28 @@ export const Navbar = () => {
 
       <Flex justify="flex-end" right="1rem" align="center">
         {/* Desktop */}
+
         <Flex display={["none", "none", "flex", "flex"]}>
-          <Link href="/login" passHref>
-            <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
-              Login
-            </Button>
-          </Link>
+          {islogged ? (
+            <Link href="/login" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Home"
+                my={5}
+                w="100%"
+                onClick={() => localStorage.removeItem("authToken")}
+              >
+                Logout
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/login" passHref>
+              <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
+                Login
+              </Button>
+            </Link>
+          )}
 
           <Link href="/about" passHref>
             <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">

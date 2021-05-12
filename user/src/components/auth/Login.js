@@ -18,7 +18,9 @@ import {
   Box,
   Text,
   useColorModeValue,
+  Flex,
 } from "@chakra-ui/react";
+
 import Flip from "react-reveal/Flip";
 
 import { Container, HStack } from "@chakra-ui/layout";
@@ -70,13 +72,122 @@ const Login = ({ history }) => {
   return (
     <VStack>
       <Flip left>
-        <HStack
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          bgGradient="linear( #a18cd1, #fbc2eb)"
+        {/* -------------------Desktop------------------- */}
+        <Flex display={["none", "none", "flex", "flex"]}>
+          <HStack
+            borderWidth="1px"
+            borderRadius="lg"
+            overflow="hidden"
+            bgGradient="linear( #a18cd1, #fbc2eb)"
+          >
+            <Box maxW="sm" borderWidth="1px" borderRadius="lg" p="5" bg={bg}>
+              <Container mb="5">
+                <VStack>
+                  <Text fontSize="5xl">Hello</Text>
+                  <Text fontSize="xl">Sign in to your account</Text>
+                </VStack>
+              </Container>
+
+              <form type="submit">
+                <Stack spacing={3}>
+                  {/* Email */}
+                  <FormControl id="email">
+                    <FormLabel>Email address</FormLabel>
+                    <InputGroup size="md">
+                      <InputLeftElement
+                        pointerEvents="none"
+                        children={<AiOutlineMail color="gray.300" />}
+                      />
+                      <Input
+                        type="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        required
+                      />{" "}
+                    </InputGroup>
+                  </FormControl>
+                  {/* Password */}
+                  <FormControl id="password">
+                    <FormLabel>Password</FormLabel>
+                    <InputGroup size="md">
+                      <InputLeftElement
+                        pointerEvents="none"
+                        children={<RiLockPasswordLine color="gray.300" />}
+                      />
+                      <Input
+                        pr="4.5rem"
+                        type="password"
+                        placeholder="Enter password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        required
+                      />
+                    </InputGroup>
+                  </FormControl>
+                  {/* Forgot Password */}
+                  <Tag
+                    size="sm"
+                    key="sm"
+                    variant="ghost"
+                    colorScheme="blue"
+                    r="100"
+                  >
+                    <Link to="/forgotpassword">
+                      <TagLabel color="gray">Forgot Password ?</TagLabel>
+                    </Link>
+                  </Tag>
+                  {/* Submite */}
+                  <Button
+                    colorScheme="teal"
+                    variant="ghost"
+                    type="submit"
+                    onClick={login}
+                  >
+                    Log In
+                  </Button>
+                  {/* Regsiter */}
+                  <Tag variant="ghost" colorScheme="blue">
+                    <Link to="/register">
+                      <TagLabel color="gray">
+                        Do not have an account ? Register!!!
+                      </TagLabel>
+                    </Link>
+                  </Tag>
+                </Stack>
+              </form>
+            </Box>
+            {/* -------------------The right Text------------------- */}
+            <Box maxW="sm" p="8">
+              <Container mb="5">
+                <VStack>
+                  <Text fontSize="5xl">Welcome Back!</Text>
+                  <Text fontSize="xl">
+                    "Neque porro quisquam est qui dolorem ipsum quia dolor sit
+                    amet, consectetur, adipisci velit..." "There is no one who
+                    loves pain itself, who seeks after it and wants to have it,
+                    simply because it is pain..."
+                  </Text>
+                </VStack>
+              </Container>
+            </Box>
+          </HStack>
+        </Flex>
+        {/* -------------------Mobile Content ------------------- */}
+        <Flex
+          w="100vw"
+          display={["flex", "flex", "none", "none"]}
+          zIndex={20}
+          align="center"
+          overflowY="auto"
+          flexDir="column"
         >
-          <Box maxW="sm" borderWidth="1px" borderRadius="lg" p="5" bg={bg}>
+          <Box
+            maxW="sm"
+            borderWidth="1px"
+            borderRadius="lg"
+            p="5"
+            bgGradient="linear( #a18cd1, #fbc2eb)"
+          >
             <Container mb="5">
               <VStack>
                 <Text fontSize="5xl">Hello</Text>
@@ -152,20 +263,7 @@ const Login = ({ history }) => {
               </Stack>
             </form>
           </Box>
-          <Box maxW="sm" p="8">
-            <Container mb="5">
-              <VStack>
-                <Text fontSize="5xl">Welcome Back!</Text>
-                <Text fontSize="xl">
-                  "Neque porro quisquam est qui dolorem ipsum quia dolor sit
-                  amet, consectetur, adipisci velit..." "There is no one who
-                  loves pain itself, who seeks after it and wants to have it,
-                  simply because it is pain..."
-                </Text>
-              </VStack>
-            </Container>
-          </Box>
-        </HStack>
+        </Flex>
       </Flip>
     </VStack>
   );

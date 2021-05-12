@@ -33,12 +33,9 @@ export const Navbar = ({ history }) => {
       <Link href="/" passHref>
         <Image src={logo} borderRadius="full" boxSize="100px" />
       </Link>
-
       <Spacer />
-
       <Flex justify="flex-end" right="1rem" align="center">
         {/* Desktop */}
-
         <Flex display={["none", "none", "flex", "flex"]}>
           {islogged ? (
             <Link href="/login" passHref>
@@ -111,11 +108,26 @@ export const Navbar = ({ history }) => {
         </Flex>
 
         <Flex flexDir="column" align="center">
-          <Link href="/" passHref>
-            <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
-              Home
-            </Button>
-          </Link>
+          {islogged ? (
+            <Link href="/login" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Home"
+                my={5}
+                w="100%"
+                onClick={() => localStorage.removeItem("authToken")}
+              >
+                Logout
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/login" passHref>
+              <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
+                Login
+              </Button>
+            </Link>
+          )}
 
           <Link href="/about" passHref>
             <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">

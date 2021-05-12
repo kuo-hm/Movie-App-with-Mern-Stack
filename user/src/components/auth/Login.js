@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { isLogged, incrementAsync } from "../../features/logged/loggedSlice";
 import {
   Input,
   VStack,
@@ -31,7 +33,8 @@ const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
-
+  // isLogged
+  const dispatch = useDispatch();
   useEffect(() => {
     if (localStorage.getItem("authToken")) {
       history.push("/");
@@ -52,6 +55,9 @@ const Login = ({ history }) => {
         { email, password },
         config
       );
+      dispatch(isLogged(true));
+      // dispatch(username(data.usernames.username));
+      dispatch(incrementAsync());
       localStorage.setItem("authToken", data.token);
       history.push("/info");
     } catch (error) {

@@ -4,6 +4,7 @@ import Register from "./components/auth/Register";
 import PriavteScreen from "./components/auth/PriavteScreen";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import PasswordReset from "./components/auth/PasswordReset";
+import Home from "./components/pages/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //Routing
@@ -19,6 +20,7 @@ function App() {
           <Switch>
             <PrivateRoute exact path="/info" component={PriavteScreen} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/forgotpassword" component={ForgotPassword} />
             <Route

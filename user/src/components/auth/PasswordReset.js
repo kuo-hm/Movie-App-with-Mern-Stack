@@ -1,4 +1,7 @@
 import { Spacer } from "@chakra-ui/layout";
+import { useDispatch } from "react-redux";
+import { postPasswordReset } from "../../features/auth/passowrdresetSlice";
+
 import {
   useToast,
   VStack,
@@ -13,22 +16,17 @@ import {
 } from "@chakra-ui/react";
 import Flip from "react-reveal/Flip";
 
-import axios from "axios";
 import { useState } from "react";
 import { RiLockPasswordLine } from "react-icons/ri";
 
-const PasswordReset = ({ match }) => {
+const PasswordReset = ({ match, history }) => {
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
   const toast = useToast();
-
+  const dispatch = useDispatch();
+  const parms = match.params.resetToken;
   const resetPasswordHandler = async (e) => {
     e.preventDefault();
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
 
     if (password !== repassword) {
       setPassword("");
@@ -40,28 +38,29 @@ const PasswordReset = ({ match }) => {
         duration: 3000,
         isClosable: true,
       });
+      return;
     }
-    try {
-      const { data } = await axios.put(
-        `/api/auth/passwordreset/${match.params.resetToken}`,
-        { password },
-        config
-      );
-      console.log(data.data);
+
+    await dispatch(postPasswordReset({ password: password, parms: parms }));
+    if (localStorage.getItem("errorResP")) {
       toast({
-        title: data.data,
-        description: "test",
+        title: localStorage.getItem("errorResP"),
+        status: "error",
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+      });
+      localStorage.removeItem("errorResP");
+    } else {
+      toast({
+        title: "Password Reseted ",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
-    } catch (error) {
-      toast({
-        title: error.response.data.error,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
+      history.push("/login");
+
+      localStorage.removeItem("errorFgp");
     }
   };
   return (

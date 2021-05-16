@@ -1,5 +1,4 @@
-import { useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Input,
@@ -20,6 +19,9 @@ import {
   InputLeftElement,
   Flex,
 } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { postRegister } from "../../features/auth/registerSlice";
+
 import Flip from "react-reveal/Flip";
 
 import { AiOutlineMail } from "react-icons/ai";
@@ -32,16 +34,13 @@ const Register = ({ history }) => {
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
 
+  const dispatch = useDispatch();
+
   const toast = useToast();
   const bg = useColorModeValue("white", "#1A202C");
-
+  useEffect(() => {}, []);
   const register = async (e) => {
     e.preventDefault();
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
 
     if (password !== repassword) {
       setPassword("");
@@ -54,22 +53,19 @@ const Register = ({ history }) => {
         isClosable: true,
       });
     }
-    try {
-      const { data } = await axios.post(
-        "/api/auth/register",
-        { username, email, password },
-        config
-      );
-      localStorage.setItem("authToken", data.token);
-      history.push("/");
-    } catch (error) {
+    const user = { email: email, password: password, username: username };
+    await dispatch(postRegister(user));
+    if (localStorage.getItem("errorRegister")) {
       toast({
-        title: error.response.data.error,
+        title: localStorage.getItem("errorRegister"),
         status: "error",
         position: "top",
         duration: 3000,
         isClosable: true,
       });
+      localStorage.removeItem("errorRegister");
+    } else {
+      history.push("/login");
     }
   };
 
@@ -104,7 +100,7 @@ const Register = ({ history }) => {
                         type="text"
                         onChange={(e) => setUsername(e.target.value)}
                         value={username}
-                        required
+                        isRequired="true"
                       />{" "}
                     </InputGroup>
                   </FormControl>
@@ -120,7 +116,7 @@ const Register = ({ history }) => {
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
-                        required
+                        isRequired="true"
                       />{" "}
                     </InputGroup>
                   </FormControl>
@@ -138,7 +134,7 @@ const Register = ({ history }) => {
                         placeholder="Enter password"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
-                        required
+                        isRequired="true"
                       />
                     </InputGroup>
                   </FormControl>
@@ -157,7 +153,7 @@ const Register = ({ history }) => {
                         placeholder="Enter Re  password"
                         onChange={(e) => setRePassword(e.target.value)}
                         value={repassword}
-                        required
+                        isRequired="true"
                       />
                     </InputGroup>
                   </FormControl>
@@ -229,7 +225,7 @@ const Register = ({ history }) => {
                       type="text"
                       onChange={(e) => setUsername(e.target.value)}
                       value={username}
-                      required
+                      isRequired="true"
                     />{" "}
                   </InputGroup>
                 </FormControl>
@@ -245,7 +241,7 @@ const Register = ({ history }) => {
                       type="email"
                       onChange={(e) => setEmail(e.target.value)}
                       value={email}
-                      required
+                      isRequired="true"
                     />{" "}
                   </InputGroup>
                 </FormControl>
@@ -263,7 +259,7 @@ const Register = ({ history }) => {
                       placeholder="Enter password"
                       onChange={(e) => setPassword(e.target.value)}
                       value={password}
-                      required
+                      isRequired="true"
                     />
                   </InputGroup>
                 </FormControl>
@@ -282,7 +278,7 @@ const Register = ({ history }) => {
                       placeholder="Enter Re  password"
                       onChange={(e) => setRePassword(e.target.value)}
                       value={repassword}
-                      required
+                      isRequired="true"
                     />
                   </InputGroup>
                 </FormControl>

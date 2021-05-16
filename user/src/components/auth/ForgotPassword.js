@@ -1,5 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { postFgPassword } from "../../features/auth/passwordforgotSlice";
+
 import {
   Heading,
   Stack,
@@ -18,38 +20,61 @@ import { AiOutlineMail } from "react-icons/ai";
 
 const ForgotPassword = ({ history }) => {
   const toast = useToast();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
 
   const forgotPasswordHandler = async (e) => {
     e.preventDefault();
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-    try {
-      const { data } = await axios.post(
-        "/api/auth/forgotpwd",
-        { email },
-        config
-      );
+
+    await dispatch(postFgPassword(email));
+    if (localStorage.getItem("errorFgp")) {
       toast({
-        title: data.data,
+        title: localStorage.getItem("errorFgp"),
+        status: "error",
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+      });
+      localStorage.removeItem("errorFgp");
+    } else {
+      toast({
+        title: "Email Sent",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
+      localStorage.removeItem("errorFgp");
       history.push("/login");
-    } catch (error) {
-      setEmail("");
-      toast({
-        title: error.response.data.error,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
     }
+
+    // const config = {
+    //   header: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
+    // try {
+    //   const { data } = await axios.post(
+    //     "/api/auth/forgotpwd",
+    //     { email },
+    //     config
+    //   );
+    //   toast({
+    //     title: data.data,
+    //     status: "success",
+    //     duration: 9000,
+    //     isClosable: true,
+    //   });
+    //   history.push("/login");
+    // } catch (error) {
+    //   setEmail("");
+    //   toast({
+    //     title: error.response.data.error,
+    //     status: "error",
+    //     duration: 9000,
+    //     isClosable: true,
+    //   });
+    // }
   };
 
   return (

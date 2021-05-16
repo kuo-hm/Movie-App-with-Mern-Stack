@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { isLogged, incrementAsync } from "../../features/logged/loggedSlice";
+import { isLogged } from "../../features/logged/loggedSlice"; //incrementAsync
+import { postLogin } from "../../features/auth/loginSlice";
 import {
   Input,
   VStack,
@@ -33,39 +33,31 @@ const Login = ({ history }) => {
   const toast = useToast();
   // isLogged
   const dispatch = useDispatch();
+
   useEffect(() => {
+    // dispatch(postLogin({ email: "", password: "" }));
     if (localStorage.getItem("authToken")) {
       history.push("/");
     }
   }, [history]);
 
-  const login = async (e) => {
+  const Login = async (e) => {
     e.preventDefault();
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
 
-    try {
-      const { data } = await axios.post(
-        "/api/auth/login",
-        { email, password },
-        config
-      );
-      dispatch(isLogged(true));
-      // dispatch(username(data.usernames.username));
-      dispatch(incrementAsync());
-      localStorage.setItem("authToken", data.token);
-      history.push("/info");
-    } catch (error) {
+    const user = { email: email, password: password };
+    await dispatch(postLogin(user));
+    if (localStorage.getItem("error")) {
       toast({
-        title: error.response.data.error,
+        title: localStorage.getItem("error"),
         status: "error",
         position: "top",
         duration: 3000,
         isClosable: true,
       });
+      localStorage.removeItem("error");
+    } else {
+      dispatch(isLogged(true));
+      history.push("/info");
     }
   };
   const bg = useColorModeValue("white", "#1A202C");
@@ -141,7 +133,7 @@ const Login = ({ history }) => {
                     colorScheme="teal"
                     variant="ghost"
                     type="submit"
-                    onClick={login}
+                    onClick={Login}
                   >
                     Log In
                   </Button>
@@ -248,7 +240,7 @@ const Login = ({ history }) => {
                   colorScheme="teal"
                   variant="ghost"
                   type="submit"
-                  onClick={login}
+                  onClick={Login}
                 >
                   Log In
                 </Button>

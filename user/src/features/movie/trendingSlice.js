@@ -9,10 +9,10 @@ export const trendingAdapter = createEntityAdapter();
 
 export const fetchTrending = createAsyncThunk(
   "trendingSlice/fetchTrending",
-  async (_, { rejectWithValue }) => {
+  async (type, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `trending/tv/day?api_key=87871b6d81576f815efd80c7af097c08`
+        `trending/${type}/day?api_key=87871b6d81576f815efd80c7af097c08`
       );
       return response.data.results;
     } catch (error) {
@@ -31,7 +31,7 @@ const trendingSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchTrending.fulfilled]: (state, action) => {
-      trendingAdapter.addMany(state, action.payload);
+      trendingAdapter.setAll(state, action.payload);
     },
 
     [fetchTrending.rejected]: (state, action) => {

@@ -1,58 +1,89 @@
-.image {
+.title{
+    font-family: sans-serif;
+    color: #dc2d5e;
+}
+.container {
     position: relative;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
 }
 
-.image__img {
+.image {
     display: block;
-
+    width: 200px;
+    height: 200px;
 }
 
-.image__overlay {
+
+.text {
+    color: white;
+    font-size: 20px;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+}
+.overlayFade{
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    font-family: 'Quicksand', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width:100%;
+    top:0;
+    left:0;
+    background-color: #ff946bbd;
+}
+.overlay {
+    position: absolute;
     opacity: 0;
-    transition: opacity 0.25s;
+    transition:all .3s ease;
+    background-color: #008cba;
 }
-
-.image__overlay--blur {
-    backdrop-filter: blur(5px);
-}
-
-.image__overlay--primary {
-    background: #009578;
-}
-
-.image__overlay > * {
-    transform: translateY(20px);
-    transition: transform 0.25s;
-}
-
-.image__overlay:hover {
+.container:hover .overlay,.container:hover .overlayFade {
     opacity: 1;
 }
 
-.image__overlay:hover > * {
-    transform: translateY(0);
+.overlayLeft{
+    height: 100%;
+    width:0;
+    top:0;
+    left:0;
+    background-color: #00b1ba;
 }
-
-.image__title {
-    font-size: 2em;
-    font-weight: bold;
+.overlayRight{
+    height: 100%;
+    width: 0;
+    top:0;
+    right:0;
+    background-color: #12888e;
 }
-
-.image__description {
-    font-size: 1.25em;
-    margin-top: 0.25em;
+.container:hover .overlayLeft ,.container:hover .overlayRight {
+    width: 100%;
 }
-
-
+.overlayTop{
+    width: 100%;
+    height: 0;
+    top:0;
+    left:0;
+    background-color: #d63c58;
+}
+.overlayBottom{
+    width: 100%;
+    height: 0;
+    bottom:0;
+    left:0;
+    background-color: #941e33;
+}
+.container:hover .overlayTop ,.container:hover .overlayBottom {
+    height: 100%;
+}
+.overlayCross{
+    width: 0%;
+    height: 0;
+    top:0;
+    left:0;
+    background-color: #e47a52;
+}
+.container:hover .overlayCross {
+    height: 100%;
+    width: 100%;
+}

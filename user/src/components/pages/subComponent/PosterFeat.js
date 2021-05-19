@@ -1,10 +1,10 @@
 import { Image, Box, Badge } from "@chakra-ui/react";
 import "./Poster.css";
-const PosterFeat = ({ data, genres }) => {
+const PosterFeat = ({ data }) => {
   const imagePath = "https://image.tmdb.org/t/p/w500";
 
   return (
-    <Box className="image">
+    <Box className="image" cursor="pointer">
       <Image
         boxSize="300px"
         className="image__img"
@@ -21,6 +21,10 @@ const PosterFeat = ({ data, genres }) => {
         >
           {data.original_title}
         </Box>
+
+        <Badge borderRadius="full" px="2" colorScheme="teal">
+          Raiting {data.vote_average}
+        </Badge>
       </Box>
     </Box>
   );

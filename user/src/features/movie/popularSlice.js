@@ -14,6 +14,7 @@ export const fetchPopular = createAsyncThunk(
       const response = await axios.get(
         `${type}/popular?api_key=87871b6d81576f815efd80c7af097c08&language=en-US&page=1`
       );
+      localStorage.setItem("popular", type);
       return response.data.results;
     } catch (error) {
       if (!error.response) {

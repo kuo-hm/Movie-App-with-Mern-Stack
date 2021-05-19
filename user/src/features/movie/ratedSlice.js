@@ -14,6 +14,8 @@ export const fetchRated = createAsyncThunk(
       const response = await axios.get(
         `${type}/top_rated?api_key=87871b6d81576f815efd80c7af097c08&language=en-US`
       );
+      localStorage.setItem("rated", type);
+
       return response.data.results;
     } catch (error) {
       if (!error.response) {

@@ -1,73 +1,133 @@
 import {
   Box,
-  HStack,
-  Image,
-  Link,
   Stack,
   Text,
   Icon,
   useColorModeValue,
+  Link as Lk,
 } from "@chakra-ui/react";
-import React from "react";
+import Carousel, { slidesToShowPlugin } from "@brainhubeu/react-carousel";
+import "@brainhubeu/react-carousel/lib/style.css";
 import { FcNext } from "react-icons/fc";
 import PosterFeat from "./PosterFeat";
-
-const Content = ({ latest, popular, genres }) => {
+import { Link } from "react-router-dom";
+const Content = ({ latest, popular, type }) => {
   const bg = useColorModeValue("black", "gray.200");
-
-  const imagePath = "https://image.tmdb.org/t/p/w500";
   return (
     <Stack>
       <Text>
-        <Link
+        <Lk
           _hover={{
             color: bg,
           }}
           fontSize="2xl"
           color="teal.500"
-          href="#"
         >
-          Popular <Icon as={FcNext} />
-        </Link>
+          <Link to="popular">
+            Popular {localStorage.getItem("popular")} <Icon as={FcNext} />
+          </Link>
+        </Lk>
       </Text>
       <Box maxW="99%" borderWidth="1px" borderRadius="lg" overflow="hidden">
-        <HStack>
-          {popular.map((pop) => (
-            <>
-              <Image
-                cursor="pointer"
-                boxSize="300px"
-                className="image__img"
-                src={imagePath + pop.poster_path}
-              />
-            </>
+        <Carousel
+          plugins={[
+            "infinite",
+
+            {
+              resolve: slidesToShowPlugin,
+              options: {
+                numberOfSlides: 5,
+              },
+            },
+          ]}
+          breakpoints={{
+            640: {
+              plugins: [
+                {
+                  resolve: slidesToShowPlugin,
+                  options: {
+                    numberOfSlides: 2,
+                  },
+                },
+              ],
+            },
+            900: {
+              plugins: [
+                {
+                  resolve: slidesToShowPlugin,
+                  options: {
+                    numberOfSlides: 3,
+                  },
+                },
+              ],
+            },
+          }}
+          animationSpeed={10}
+        >
+          {popular.map((data) => (
+            <div>
+              <PosterFeat data={data} />
+            </div>
           ))}
-        </HStack>
+        </Carousel>
       </Box>
       <Text>
-        <Link
+        <Lk
           _hover={{
             color: bg,
           }}
           fontSize="2xl"
           color="teal.500"
-          href="#"
         >
-          Top Rated <Icon as={FcNext} />
-        </Link>
+          <Link to="rated">
+            Top Rated {localStorage.getItem("rated")}
+            <Icon as={FcNext} />
+          </Link>
+        </Lk>
       </Text>
 
       <Box maxW="99%" borderWidth="1px" borderRadius="lg" overflow="hidden">
-        <HStack>
-          {latest.map((lat) => (
-            <Image
-              cursor="pointer"
-              boxSize="300px"
-              className="image__img"
-              src={imagePath + lat.poster_path}
-            />
+        <Carousel
+          plugins={[
+            "infinite",
+
+            {
+              resolve: slidesToShowPlugin,
+              options: {
+                numberOfSlides: 5,
+              },
+            },
+          ]}
+          breakpoints={{
+            640: {
+              plugins: [
+                {
+                  resolve: slidesToShowPlugin,
+                  options: {
+                    numberOfSlides: 2,
+                  },
+                },
+              ],
+            },
+            900: {
+              plugins: [
+                {
+                  resolve: slidesToShowPlugin,
+                  options: {
+                    numberOfSlides: 3,
+                  },
+                },
+              ],
+            },
+          }}
+          animationSpeed={10}
+        >
+          {latest.map((data) => (
+            <div>
+              <PosterFeat data={data} />
+            </div>
           ))}
-        </HStack>
+        </Carousel>
       </Box>
     </Stack>
   );

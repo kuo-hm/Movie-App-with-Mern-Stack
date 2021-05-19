@@ -121,7 +121,7 @@ const Home = () => {
         </HStack>
       </VStack>
       <Slider datas={trending} genres={genres} />
-      <Content latest={latest} popular={popular} genres={genres} />
+      <Content type={type} latest={latest} popular={popular} />
     </Stack>
   );
 };

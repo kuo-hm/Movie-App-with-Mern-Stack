@@ -11,6 +11,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import NavBar from "./components/Navbar";
 
+import Rated from "./components/pages/Rated";
+import Popular from "./components/pages/Popular";
+
 function App() {
   return (
     <>
@@ -23,6 +26,8 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/forgotpassword" component={ForgotPassword} />
+            <Route exact path="/rated" component={Rated} />
+            <Route exact path="/popular" component={Popular} />
             <Route
               exact
               path="/passwordreset/:resetToken"

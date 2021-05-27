@@ -65,7 +65,7 @@ const Content = ({ latest, popular, type }) => {
           animationSpeed={10}
         >
           {popular.map((data) => (
-            <div>
+            <div key={data.id}>
               <PosterFeat data={data} />
             </div>
           ))}
@@ -123,7 +123,7 @@ const Content = ({ latest, popular, type }) => {
           animationSpeed={10}
         >
           {latest.map((data) => (
-            <div>
+            <div key={data.id}>
               <PosterFeat data={data} />
             </div>
           ))}

@@ -12,7 +12,7 @@ export const fetchPopular = createAsyncThunk(
   async (type, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${type}/popular?api_key=87871b6d81576f815efd80c7af097c08&language=en-US&page=1`
+        `${type}/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`
       );
       localStorage.setItem("popular", type);
       return response.data.results;

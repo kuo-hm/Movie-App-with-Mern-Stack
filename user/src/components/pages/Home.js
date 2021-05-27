@@ -42,26 +42,15 @@ const Home = () => {
     //Fetch Genre
     dispatch(fetchGenres());
   }, [dispatch, type]);
-  const [btnM, setbtnM] = useState(false);
-  const [btnA, setbtnA] = useState(false);
-  const [btnT, setbtnT] = useState(false);
+
   const movies = () => {
     setType("movie");
-    setbtnM(true);
-    setbtnA(false);
-    setbtnT(false);
   };
   const all = () => {
     setType("all");
-    setbtnM(false);
-    setbtnT(false);
-    setbtnA(true);
   };
   const tv = () => {
     setType("tv");
-    setbtnM(false);
-    setbtnT(true);
-    setbtnA(false);
   };
 
   return (
@@ -72,7 +61,7 @@ const Home = () => {
             <Button
               w="100px"
               onClick={movies}
-              isActive={btnM}
+              isActive={type === "movie"}
               _active={{
                 bg: "green.200",
                 transform: "scale(0.98)",
@@ -87,7 +76,7 @@ const Home = () => {
             </Button>
             <Button
               w="100px"
-              isActive={btnA}
+              isActive={type === "all"}
               onClick={all}
               _active={{
                 bg: "green.200",
@@ -103,7 +92,7 @@ const Home = () => {
             </Button>
             <Button
               w="100px"
-              isActive={btnT}
+              isActive={type === "tv"}
               onClick={tv}
               _active={{
                 bg: "green.200",

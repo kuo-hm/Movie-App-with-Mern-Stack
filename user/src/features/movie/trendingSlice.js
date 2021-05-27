@@ -12,7 +12,7 @@ export const fetchTrending = createAsyncThunk(
   async (type, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `trending/${type}/day?api_key=87871b6d81576f815efd80c7af097c08`
+        `trending/${type}/day?api_key=${process.env.REACT_APP_API_KEY}`
       );
       return response.data.results;
     } catch (error) {

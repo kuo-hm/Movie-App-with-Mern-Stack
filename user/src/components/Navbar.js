@@ -5,10 +5,10 @@ import {
   Flex,
   Button,
   IconButton,
-  Link,
   Image,
   Spacer,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { isLogged } from "../features/logged/loggedSlice";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ export const Navbar = ({ history }) => {
   const [display, changeDisplay] = useState("none");
   return (
     <Flex>
-      <Link href="/" passHref>
+      <Link to="/">
         <Image src={logo} borderRadius="full" boxSize="100px" />
       </Link>
       <Spacer />
@@ -38,7 +38,7 @@ export const Navbar = ({ history }) => {
         {/* Desktop */}
         <Flex display={["none", "none", "flex", "flex"]}>
           {islogged ? (
-            <Link href="/login" passHref>
+            <Link to="/login">
               <Button
                 as="a"
                 variant="ghost"
@@ -51,20 +51,20 @@ export const Navbar = ({ history }) => {
               </Button>
             </Link>
           ) : (
-            <Link href="/login" passHref>
+            <Link to="/login">
               <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
                 Login
               </Button>
             </Link>
           )}
 
-          <Link href="/about" passHref>
+          <Link to="/about">
             <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
               About
             </Button>
           </Link>
 
-          <Link href="/contact" passHref>
+          <Link to="/contact">
             <Button as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
               Contact
             </Button>
@@ -109,7 +109,7 @@ export const Navbar = ({ history }) => {
 
         <Flex flexDir="column" align="center">
           {islogged ? (
-            <Link href="/login" passHref>
+            <Link to="/login">
               <Button
                 as="a"
                 variant="ghost"
@@ -122,20 +122,20 @@ export const Navbar = ({ history }) => {
               </Button>
             </Link>
           ) : (
-            <Link href="/login" passHref>
+            <Link to="/login">
               <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
                 Login
               </Button>
             </Link>
           )}
 
-          <Link href="/about" passHref>
+          <Link to="/about">
             <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
               About
             </Button>
           </Link>
 
-          <Link href="/contact" passHref>
+          <Link to="/contact">
             <Button as="a" variant="ghost" aria-label="Contact" my={5} w="100%">
               Contact
             </Button>

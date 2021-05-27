@@ -58,7 +58,7 @@ const Slider = ({ genres, datas }) => {
           animationSpeed={10}
         >
           {datas.map((data) => (
-            <div>
+            <div key={data.id}>
               <Posters data={data} genres={genres} />
             </div>
           ))}

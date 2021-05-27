@@ -12,7 +12,7 @@ export const fetchRated = createAsyncThunk(
   async (type, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${type}/top_rated?api_key=87871b6d81576f815efd80c7af097c08&language=en-US`
+        `${type}/top_rated?api_key=${process.env.REACT_APP_API_KEY}`
       );
       localStorage.setItem("rated", type);
 

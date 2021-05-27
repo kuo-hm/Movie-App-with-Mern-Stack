@@ -27,7 +27,7 @@ const MoviePoster = ({ data, genres }) => {
             genres
               .filter((genre) => genre.id === genreId)
               .map((filteredGenre) => (
-                <Box>
+                <Box key={genreId.id}>
                   <Badge>{filteredGenre.name}</Badge>
                 </Box>
               ))

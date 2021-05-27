@@ -12,7 +12,7 @@ export const fetchGenres = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `genre/movie/list?api_key=87871b6d81576f815efd80c7af097c08&language=en-US`
+        `genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
       );
       return response.data.genres;
     } catch (error) {

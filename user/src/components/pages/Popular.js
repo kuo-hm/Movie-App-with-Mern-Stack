@@ -1,12 +1,12 @@
 import {
   Box,
-  Grid,
   GridItem,
   Heading,
   Image,
   Text,
   IconButton,
   Button,
+  SimpleGrid,
 } from "@chakra-ui/react";
 
 import React, { useEffect, useState } from "react";
@@ -26,6 +26,7 @@ const Popular = () => {
   const genres = useSelector(selectAllGenres);
   const dispatch = useDispatch();
   const [showTrailer, setShowTrailer] = useState(true);
+  const [scroll, setScroll] = useState(false);
   const [ypath, setypath] = useState({
     backdrop_path: "",
     id: "",
@@ -44,25 +45,29 @@ const Popular = () => {
     localStorage.getItem("popular").charAt(0).toUpperCase() +
     localStorage.getItem("popular").slice(1) +
     "s";
-
+  const changePosition = () => {
+    if (window.scrollY >= "147") setScroll(true);
+    else setScroll(false);
+  };
+  window.addEventListener("scroll", changePosition);
   return (
     <Box>
-      <Heading>Popular {type}</Heading>
-      <Grid
-        h="200px"
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
-        gap={4}
+      <Heading mb="2">Popular {type}</Heading>
+      <Box
+        position={scroll ? "fixed" : "sticky"}
+        top="0"
+        w="100%"
+        zIndex="100"
+        overflow="hidden"
       >
         {ypath.filled && (
-          <GridItem colSpan={5} position="relative">
+          <Box position="relative">
             <Image
               w="100%"
               h="50vh"
               src={imagePath + ypath.backdrop_path}
               alt=""
             />
-
             <Box>
               <Text
                 position="absolute"
@@ -95,14 +100,15 @@ const Popular = () => {
                 {ypath.overview}
               </Text>
 
-              <IconButton
+              <Button
                 position="absolute"
                 top="8px"
                 right="16px"
                 aria-label="Search database"
-                icon={<AiOutlineCloseCircle />}
                 onClick={() => setypath({ youtubePath: "" })}
-              />
+              >
+                X
+              </Button>
               <Button
                 position="absolute"
                 bottom="50"
@@ -141,8 +147,10 @@ const Popular = () => {
                 </Box>
               )}
             </Box>
-          </GridItem>
+          </Box>
         )}
+      </Box>
+      <SimpleGrid h="200px" minChildWidth="200px" spacing="10px">
         {popular.map((data) => (
           <GridItem key={data.id} colSpan={1}>
             <PopularOverlay
@@ -154,7 +162,7 @@ const Popular = () => {
             />
           </GridItem>
         ))}
-      </Grid>
+      </SimpleGrid>
     </Box>
   );
 };

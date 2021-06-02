@@ -27,7 +27,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const trending = useSelector(selectAllTrendingVideos);
   const genres = useSelector(selectAllGenres);
-  const latest = useSelector(selectAllRated);
+  const rated = useSelector(selectAllRated);
   const popular = useSelector(selectAllPopular);
   const [type, setType] = useState("all");
   useEffect(() => {
@@ -110,7 +110,7 @@ const Home = () => {
         </HStack>
       </VStack>
       <Slider datas={trending} genres={genres} />
-      <Content type={type} latest={latest} popular={popular} />
+      <Content type={type} rated={rated} popular={popular} />
     </Stack>
   );
 };

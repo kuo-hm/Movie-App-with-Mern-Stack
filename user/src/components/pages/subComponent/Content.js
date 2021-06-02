@@ -11,7 +11,7 @@ import "@brainhubeu/react-carousel/lib/style.css";
 import { FcNext } from "react-icons/fc";
 import PosterFeat from "./PosterFeat";
 import { Link } from "react-router-dom";
-const Content = ({ latest, popular, type }) => {
+const Content = ({ rated, popular }) => {
   const bg = useColorModeValue("black", "gray.200");
   return (
     <Stack>
@@ -122,7 +122,7 @@ const Content = ({ latest, popular, type }) => {
           }}
           animationSpeed={10}
         >
-          {latest.map((data) => (
+          {rated.map((data) => (
             <div key={data.id}>
               <PosterFeat data={data} />
             </div>

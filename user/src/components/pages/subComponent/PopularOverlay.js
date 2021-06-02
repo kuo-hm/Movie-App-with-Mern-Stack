@@ -3,8 +3,27 @@ import "./Poster.css";
 import axios from "axios";
 // import YouTube from "react-youtube";
 
-const PopularOverlay = ({ data, setypath, imagePath, setShowTrailer }) => {
+const PopularOverlay = ({
+  data,
+  setypath,
+  imagePath,
+  setShowTrailer,
+  setDisplayShow,
+}) => {
   const trailerFetch = async (id) => {
+    setypath({
+      backdrop_path: data.backdrop_path,
+      id: data.id,
+      original_title: data.original_title,
+      overview: data.overview,
+      overviews: "Overview:",
+      poster_path: data.poster_path,
+      vote_average: data.vote_average,
+      filled: true,
+    });
+    setShowTrailer(false);
+    setDisplayShow(true);
+
     await axios
       .get(
         `https://api.themoviedb.org/3/movie/${id}/videos?api_key=87871b6d81576f815efd80c7af097c08&language=en-US`
@@ -12,9 +31,8 @@ const PopularOverlay = ({ data, setypath, imagePath, setShowTrailer }) => {
       .then((res) => {
         const persons = res.data.results;
         persons.forEach((element) => {
-          if (element.type === "Trailer") {
+          if (element.site === "YouTube") {
             setypath({
-              youtubePath: element.key,
               backdrop_path: data.backdrop_path,
               id: data.id,
               original_title: data.original_title,
@@ -23,8 +41,8 @@ const PopularOverlay = ({ data, setypath, imagePath, setShowTrailer }) => {
               poster_path: data.poster_path,
               vote_average: data.vote_average,
               filled: true,
+              youtubePath: element.key,
             });
-            setShowTrailer(false);
           }
         });
       });

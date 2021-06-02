@@ -3,13 +3,7 @@ import "./Poster.css";
 import axios from "axios";
 // import YouTube from "react-youtube";
 
-const PopularOverlay = ({
-  data,
-  setypath,
-  imagePath,
-  setShowTrailer,
-  setDisplayShow,
-}) => {
+const PopularOverlay = ({ data, setypath, imagePath, setShowTrailer }) => {
   const trailerFetch = async (id) => {
     setypath({
       backdrop_path: data.backdrop_path,
@@ -22,8 +16,6 @@ const PopularOverlay = ({
       filled: true,
     });
     setShowTrailer(false);
-    setDisplayShow(true);
-
     await axios
       .get(
         `https://api.themoviedb.org/3/movie/${id}/videos?api_key=87871b6d81576f815efd80c7af097c08&language=en-US`

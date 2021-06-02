@@ -1,12 +1,4 @@
-import {
-  Box,
-  GridItem,
-  Heading,
-  Image,
-  Text,
-  Button,
-  SimpleGrid,
-} from "@chakra-ui/react";
+import { Box, GridItem, Heading, SimpleGrid } from "@chakra-ui/react";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +17,6 @@ const Popular = () => {
   const genres = useSelector(selectAllGenres);
   const dispatch = useDispatch();
   const [showTrailer, setShowTrailer] = useState(true);
-  const [displayShow, setDisplayShow] = useState(false);
   const [ypath, setypath] = useState({
     backdrop_path: "",
     id: "",
@@ -71,7 +62,6 @@ const Popular = () => {
                 genres={genres}
                 imagePath={imagePath}
                 setypath={setypath}
-                setDisplayShow={setDisplayShow}
                 setShowTrailer={setShowTrailer}
               />
             </GridItem>

@@ -1,5 +1,5 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 
 const DIsplayData = ({
   ypath,

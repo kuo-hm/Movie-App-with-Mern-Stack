@@ -1,13 +1,4 @@
-import {
-  Box,
-  GridItem,
-  Heading,
-  Image,
-  Text,
-  Button,
-  SimpleGrid,
-  Grid,
-} from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +10,6 @@ import DIsplayData from "./subComponent/DIsplayData";
 import PopularOverlay from "./subComponent/PopularOverlay";
 const Rated = () => {
   const imagePath = "https://image.tmdb.org/t/p/w500";
-  const [displayShow, setDisplayShow] = useState(false);
 
   const rated = useSelector(selectAllRated);
   const genres = useSelector(selectAllGenres);
@@ -71,7 +61,6 @@ const Rated = () => {
                 data={data}
                 genres={genres}
                 imagePath={imagePath}
-                setDisplayShow={setDisplayShow}
                 setypath={setypath}
                 setShowTrailer={setShowTrailer}
               />

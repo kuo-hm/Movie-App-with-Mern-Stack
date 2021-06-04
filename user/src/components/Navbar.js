@@ -45,7 +45,10 @@ export const Navbar = ({ history }) => {
                 aria-label="Home"
                 my={5}
                 w="100%"
-                onClick={() => localStorage.removeItem("authToken")}
+                onClick={() => {
+                  localStorage.removeItem("authToken");
+                  dispatch(isLogged(false));
+                }}
               >
                 Logout
               </Button>
@@ -58,9 +61,9 @@ export const Navbar = ({ history }) => {
             </Link>
           )}
 
-          <Link to="/about">
+          <Link to="/info">
             <Button as="a" variant="ghost" aria-label="About" my={5} w="100%">
-              About
+              Settings
             </Button>
           </Link>
 

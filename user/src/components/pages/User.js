@@ -1,22 +1,17 @@
-import {
-  Box,
-  Flex,
-  Text,
-  Heading,
-  Stack,
-  HStack,
-  DarkMode,
-} from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Flex, Text, Heading, Stack, Input } from "@chakra-ui/react";
+
 import FileBase from "react-file-base64";
+import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
+import "@syncfusion/ej2-base/styles/bootstrap.css";
+import "@syncfusion/ej2-buttons/styles/bootstrap.css";
+import "@syncfusion/ej2-inputs/styles/bootstrap.css";
+import "@syncfusion/ej2-popups/styles/bootstrap.css";
+import "@syncfusion/ej2-react-calendars/styles/bootstrap.css";
 import SideNav from "./subComponent/SideNav";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
-// import DatePicker from "react-modern-calendar-datepicker";
-import { DatePicker, RangeDatePicker } from "@y0c/react-datepicker";
-import "@y0c/react-datepicker/assets/styles/calendar.scss";
+import { useState } from "react";
 
 const User = () => {
-  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedDay, setSelectedDay] = useState();
 
   return (
     <Stack>
@@ -27,38 +22,43 @@ const User = () => {
       {/* Desktop */}
       <Flex display={["none", "none", "flex", "flex"]}>
         <Box ml="20%">
-          <Heading>Dashboard</Heading>
-          <HStack>
-            <Text>Username:</Text>
-            <Text>{localStorage.getItem("username")}</Text>
-          </HStack>
-          <Text>Change your Avatar</Text>
-          <FileBase />
-          <Text>Birth Day</Text>
-          <DarkMode>
-            {/* <DatePicker
-              colorPrimary="#FF0000"
-              backgroundColor="#FF0000"
-              colorPrimaryLight="#FF0000"
-              value={selectedDay}
-              onChange={setSelectedDay}
-              inputPlaceholder="Select a day"
-              shouldHighlightWeekends
-            /> */}
-            <DatePicker showToday />
-          </DarkMode>
-          <Text>Bio</Text>
-          {/* Security */}
-          <Heading>Security</Heading>
-          <Text>Email</Text>
-          <Text>Type your old Password</Text>
-          <Text>Your New Password</Text>
-          <Text>RE New Password</Text>
-          {/* Favorites */}
-          <Heading>Favorites</Heading>
-          <Text>Sort By Tv/Movie</Text>
-          <Text>Release date if not out </Text>
-          <Text>Watching//Completed//Dropped</Text>
+          <Box className="Dashboard">
+            <Heading>Dashboard</Heading>
+            <Text>Display Name: {localStorage.getItem("username")}</Text>
+            <Input placeholder="Change ur Display Name (optional)" />
+            <br />
+            <br />
+            <Text>Change your Avatar </Text>
+            <img src={selectedDay} alt="" />
+            <FileBase
+              type="file"
+              multiline={false}
+              onDone={({ base64 }) => setSelectedDay(base64)}
+            />
+            {/* <StyledDropzone /> */}
+            <br />
+            <br />
+            <Text>Birth Day</Text>
+            <DatePickerComponent
+              id="datetimepicker"
+              placeholder="Select a date and time"
+            />
+            <Text>Bio</Text>
+          </Box>
+          <Box className="Security" display="none">
+            <Heading>Security</Heading>
+            <Text>Email</Text>
+            <Text>Type your old Password</Text>
+            <Text>Your New Password</Text>
+            <Text>RE New Password</Text>
+          </Box>
+          {/* Favorites */}{" "}
+          <Box className="favorites" display="none">
+            <Heading>Favorites</Heading>
+            <Text>Sort By Tv/Movie</Text>
+            <Text>Release date if not out </Text>
+            <Text>Watching//Completed//Dropped</Text>
+          </Box>
         </Box>
       </Flex>
       {/* Mobile */}

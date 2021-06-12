@@ -1,27 +1,27 @@
 import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllGenres } from "../../features/movie/genreSlice";
-
 import { fetchRated, selectAllRated } from "../../features/movie/ratedSlice";
 import DIsplayData from "./subComponent/DIsplayData";
-
 import PopularOverlay from "./subComponent/PopularOverlay";
+
 const Rated = () => {
   const imagePath = "https://image.tmdb.org/t/p/w500";
-
   const rated = useSelector(selectAllRated);
   const genres = useSelector(selectAllGenres);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchRated(localStorage.getItem("rated")));
   }, [dispatch]);
+
   const type =
     localStorage.getItem("rated").charAt(0).toUpperCase() +
     localStorage.getItem("rated").slice(1) +
     "s";
+
   const [ypath, setypath] = useState({
     backdrop_path: "",
     id: "",
@@ -33,14 +33,18 @@ const Rated = () => {
     youtubePath: "",
     filled: false,
   });
+
   const [showTrailer, setShowTrailer] = useState(true);
+
   const changePosition = () => {
     if (window.scrollY >= "147" && ypath.filled) {
       setScroll(true);
       return;
     } else setScroll(false);
   };
+
   window.addEventListener("scroll", changePosition);
+
   const [scroll, setScroll] = useState(false);
 
   return (

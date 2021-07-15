@@ -1,16 +1,19 @@
 import {
   Avatar,
   Box,
+  Button,
   Grid,
   GridItem,
   Heading,
   Input,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import undifinedUser from "../../../assets/undifinedUser.png";
-
+import { useDispatch } from "react-redux";
+import { postInfo } from "../../../features/auth/infoSlice";
 import FileBase from "react-file-base64";
 import "@syncfusion/ej2-base/styles/bootstrap.css";
 import "@syncfusion/ej2-buttons/styles/bootstrap.css";
@@ -20,19 +23,52 @@ import "@syncfusion/ej2-react-calendars/styles/bootstrap.css";
 import { useState } from "react";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const [bio, SetBio] = useState();
   const [avatar, setAvatar] = useState();
+  const [birthday, setBirthday] = useState();
   const [displayName, setDisplayName] = useState("");
   const handleDisplayName = (e) => {
     setDisplayName(e.target.value);
+  };
+  const toast = useToast();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const info = {
+      username: displayName,
+      avatar: avatar,
+      bio: bio,
+      birthday: birthday,
+    };
+    dispatch(postInfo(info));
+    if (localStorage.getItem("errorInfo")) {
+      toast({
+        title: localStorage.getItem("errorRegister"),
+        status: "error",
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+      });
+      localStorage.removeItem("errorRegister");
+    } else {
+      toast({
+        title: "Your Infos Got updated!",
+        status: "Success",
+        position: "top",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
   return (
     <Box className="Dashboard">
       <Heading>Dashboard</Heading>
       <Grid
-        h="80vh"
+        h="60vh"
         templateRows="repeat(2, 5fr)"
         templateColumns="repeat(4, 10fr)"
-        gap={18}
+        gap={15}
       >
         <GridItem rowSpan={1} colSpan={2}>
           <Avatar
@@ -68,7 +104,15 @@ const Dashboard = () => {
           />
         </GridItem>
         <GridItem rowSpan={1} colSpan={2}>
-          <Textarea placeholder="Your Bio" />
+          <Textarea
+            placeholder="Your Bio"
+            onChange={(e) => SetBio(e.target.value)}
+          ></Textarea>
+        </GridItem>
+        <GridItem rowSpan={2} colSpan={4}>
+          <Button w="100%" onClick={() => handleSubmit}>
+            Submit
+          </Button>
         </GridItem>
       </Grid>
     </Box>

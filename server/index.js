@@ -6,6 +6,7 @@ const dotenv = require("dotenv").config({ path: ".env" });
 // Routes
 const movieRouter = require("./routes/movie");
 const authRouter = require("./routes/auth");
+const infotRouter = require("./routes/info");
 
 const app = express();
 
@@ -32,3 +33,4 @@ mongoose
 // Route Middlwares
 app.use("/api", movieRouter);
 app.use("/api", authRouter);
+app.use("/api", infotRouter);

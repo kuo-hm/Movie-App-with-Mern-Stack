@@ -4,20 +4,22 @@ import FileBase from "react-file-base64";
 import Dashboard from "./settingComponent/Dashboard";
 import Favorites from "./settingComponent/Favorites";
 import Settings from "./settingComponent/Settings";
+import { useState } from "react";
 
 const User = () => {
+  const [tabSelected, setTabSelected] = useState("dashboard");
   return (
     <Stack>
       {/* Side Nav */}
       <Box>
-        <SideNav />
+        <SideNav tabSelected={setTabSelected} />
       </Box>
       {/* Desktop */}
       <Flex display={["none", "none", "flex", "flex"]}>
         <Box ml="20%">
-          <Dashboard />
-          <Favorites />
-          <Settings />
+          {tabSelected === "dashboard" && <Dashboard />}
+          {tabSelected === "favorites" && <Favorites />}
+          {tabSelected === "settings" && <Settings />}
         </Box>
       </Flex>
       {/* Mobile */}

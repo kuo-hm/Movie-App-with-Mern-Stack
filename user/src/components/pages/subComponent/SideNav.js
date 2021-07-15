@@ -3,25 +3,25 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import { BsGear } from "react-icons/bs";
 import "./SideNav.css";
-const SideNav = () => {
+const SideNav = ({ tabSelected }) => {
   return (
     <Box className="navbar" mt="98px">
       <List className="navbar-nav">
-        <ListItem className="nav-item">
+        <ListItem className="nav-item" onClick={() => tabSelected("dashboard")}>
           <Box className="nav-link nav-link-das">
             <Icon as={AiOutlineDashboard} />
             <Text className="link-text">Dashboard</Text>
           </Box>
         </ListItem>
 
-        <ListItem className="nav-item">
+        <ListItem className="nav-item" onClick={() => tabSelected("settings")}>
           <Box className="nav-link nav-link-set">
             <Icon as={BsGear} />
             <Text className="link-text">Settings</Text>
           </Box>
         </ListItem>
 
-        <ListItem className="nav-item">
+        <ListItem className="nav-item" onClick={() => tabSelected("favorites")}>
           <Box className="nav-link nav-link-fav">
             <Icon as={FaHeart} />
             <span className="link-text">Favorites</span>

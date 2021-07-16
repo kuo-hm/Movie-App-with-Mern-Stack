@@ -23,7 +23,7 @@ export const postInfo = createAsyncThunk(
     };
     try {
       await axios.post(
-        "/api/auth/save",
+        "/api/info/save",
         { username, bio, birthday, avatar },
         config
       );

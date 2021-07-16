@@ -10,17 +10,14 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import { DatePickerComponent } from "@syncfusion/ej2-react-calendars";
 import undifinedUser from "../../../assets/undifinedUser.png";
 import { useDispatch } from "react-redux";
 import { postInfo } from "../../../features/auth/infoSlice";
 import FileBase from "react-file-base64";
-import "@syncfusion/ej2-base/styles/bootstrap.css";
-import "@syncfusion/ej2-buttons/styles/bootstrap.css";
-import "@syncfusion/ej2-inputs/styles/bootstrap.css";
-import "@syncfusion/ej2-popups/styles/bootstrap.css";
-import "@syncfusion/ej2-react-calendars/styles/bootstrap.css";
+import "./DatePicker.css";
 import { useState } from "react";
+import DatePicker from "react-date-picker";
+import Compress from "react-image-file-resizer";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -32,14 +29,43 @@ const Dashboard = () => {
     setDisplayName(e.target.value);
   };
   const toast = useToast();
+  const onFileResize = (e) => {
+    const file = e.target.files[0];
 
+    Compress.imageFileResizer(
+      file, // the file from input
+      480, // width
+      480, // height
+      "JPEG", // compress format WEBP, JPEG, PNG
+      70, // quality
+      0, // rotation
+      (uri) => {
+        // console.log(uri);
+        setAvatar(uri);
+        // You upload logic goes here
+      },
+      "base64" // blob or base64 default base64
+    );
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!birthday) return;
+    var dd = birthday.getDate();
+    var mm = birthday.getMonth() + 1;
+
+    var yyyy = birthday.getFullYear();
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    var today = dd + "/" + mm + "/" + yyyy;
     const info = {
       username: displayName,
       avatar: avatar,
       bio: bio,
-      birthday: birthday,
+      birthday: today,
     };
     dispatch(postInfo(info));
     if (localStorage.getItem("errorInfo")) {
@@ -90,17 +116,24 @@ const Dashboard = () => {
           <Text mt="5" mb="5">
             Change your Avatar{" "}
           </Text>
-          <FileBase
+          {/* <FileBase
             type="file"
             multiline={false}
             onDone={({ base64 }) => setAvatar(base64)}
+          /> */}
+          <input
+            type="file"
+            id="file"
+            accept="image/png, image/gif, image/jpeg"
+            onChange={onFileResize}
           />
         </GridItem>
         <GridItem rowSpan={1} colSpan={2}>
           <Text mb="5">Birth Day</Text>
-          <DatePickerComponent
-            id="datetimepicker"
-            placeholder="Select a date and time"
+          <DatePicker
+            onChange={setBirthday}
+            value={birthday}
+            format="dd-MM-yyyy"
           />
         </GridItem>
         <GridItem rowSpan={1} colSpan={2}>
@@ -110,7 +143,7 @@ const Dashboard = () => {
           ></Textarea>
         </GridItem>
         <GridItem rowSpan={2} colSpan={4}>
-          <Button w="100%" onClick={() => handleSubmit}>
+          <Button w="100%" onClick={handleSubmit}>
             Submit
           </Button>
         </GridItem>
